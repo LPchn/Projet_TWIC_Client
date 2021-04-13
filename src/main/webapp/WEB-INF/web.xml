@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+	version="3.0">
+	
+	<servlet>
+		<servlet-name>PagePrincipale</servlet-name>
+		<servlet-class>fr.eseo.twic.servlet.PagePrincipale</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>PagePrincipale</servlet-name>
+		<url-pattern>/pagePrincipale</url-pattern>
+	</servlet-mapping>		
+
+	<servlet>
+		<servlet-name>ListeVilles</servlet-name>
+		<servlet-class>fr.eseo.twic.servlet.ListeVilles</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>ListeVilles</servlet-name>
+		<url-pattern>/listeVilles</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>DetailsVille</servlet-name>
+		<servlet-class>fr.eseo.twic.servlet.DetailsVille</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>DetailsVille</servlet-name>
+		<url-pattern>/details</url-pattern>
+	</servlet-mapping>
+
+	
+	<servlet>
+		<servlet-name>Accueil</servlet-name>
+		<servlet-class>fr.eseo.twic.servlet.Accueil</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>Accueil</servlet-name>
+		<url-pattern>/accueil</url-pattern>
+	</servlet-mapping>		
+
+	<servlet>
+		<servlet-name>SupprimerVille</servlet-name>
+		<servlet-class>fr.eseo.twic.servlet.SupprimerVille</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>SupprimerVille</servlet-name>
+		<url-pattern>/supprimer</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AjouterVille</servlet-name>
+		<servlet-class>fr.eseo.twic.servlet.AjouterVille</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjouterVille</servlet-name>
+		<url-pattern>/ajouter</url-pattern>
+	</servlet-mapping>	
+		
+
+	<servlet>
+		<servlet-name>ModifierVille</servlet-name>
+		<servlet-class>fr.eseo.twic.servlet.ModifierVille</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ModifierVille</servlet-name>
+		<url-pattern>/modifier</url-pattern>
+	</servlet-mapping>
+
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/WEB-INF/taglibs.jsp</include-prelude>			
+		</jsp-property-group>
+	</jsp-config>
+	
+</web-app>

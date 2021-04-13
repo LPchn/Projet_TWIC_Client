@@ -1,0 +1,11 @@
+.page-holder {
+  min-height: 18vh;
+  background: linear-gradient(to right,  rgb(0, 0, 255) , rgb(255, 0, 0));
+  margin-bottom: 20px; 
+}
+
+img{
+	max-width: 13%;
+	margin: 10px;
+	background-image: none;
+}
