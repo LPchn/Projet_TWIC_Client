@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eseo.twic.api.VilleApi;
 import fr.eseo.twic.api.VilleApiImpl;
 import fr.eseo.twic.meteo.MeteoApi;
+import fr.eseo.twic.meteo.MeteoApiException;
 import fr.eseo.twic.meteo.MeteoApiImpl;
 import fr.eseo.twic.modele.Meteo;
 import fr.eseo.twic.modele.Ville;
@@ -38,8 +39,13 @@ public class DetailsVille extends HttpServlet {
 		request.setAttribute("ville", ville);
 		
 		MeteoApi meteoApi = new MeteoApiImpl();
-		Meteo meteo = meteoApi.getMeteo(code);
-		request.setAttribute("meteo", meteo);
+		Meteo meteo;
+		try {
+			meteo = meteoApi.getMeteo(code);
+			request.setAttribute("meteo", meteo);
+		} catch (MeteoApiException e) {			
+			e.printStackTrace();
+		}		
 		
 		request.getServletContext().getRequestDispatcher("/WEB-INF/detailsVille.jsp").forward(request, response);
 	}

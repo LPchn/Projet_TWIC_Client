@@ -6,20 +6,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import ch.qos.logback.classic.Level;
 import fr.eseo.twic.modele.Meteo;
-import fr.eseo.twic.modele.Ville;
 import jdk.jfr.internal.Logger;
+
 
 public class MeteoApiImpl implements MeteoApi {
 
-	public Meteo getMeteo(String codeInsee) {
+	public Meteo getMeteo(String codeInsee) throws MeteoApiException {
 		
 		Meteo meteo = null;
 		
@@ -34,7 +31,7 @@ public class MeteoApiImpl implements MeteoApi {
 			// Lorsqu'on envoie une requête, on reçoit un code de réponse 200.
 			// On s'assure donc que la requête fonctionne.
 			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+				throw new MeteoApiException("Erreur avec l'API");
 			}
 
 			// On lit ce que la connexion nous renvoie.
@@ -51,14 +48,14 @@ public class MeteoApiImpl implements MeteoApi {
 			
 			JSONArray array = (JSONArray) json.get("forecast");			
 			
-			JSONObject données = (JSONObject) array.get(0);
+			JSONObject donnees = (JSONObject) array.get(0);
 			
-			String temperatureMin = données.get("tmin").toString();				//°C
-			String temperatureMax = données.get("tmax").toString();				//°C
-			String vent = données.get("wind10m").toString();					//km/h
-			String pluie = données.get("rr1").toString();						//mm
-			String probabilitePluie = données.get("probarain").toString();		//%
-			String temps = données.get("weather").toString();					//indice
+			String temperatureMin = donnees.get("tmin").toString();				//°C
+			String temperatureMax = donnees.get("tmax").toString();				//°C
+			String vent = donnees.get("wind10m").toString();					//km/h
+			String pluie = donnees.get("rr1").toString();						//mm
+			String probabilitePluie = donnees.get("probarain").toString();		//%
+			String temps = donnees.get("weather").toString();					//indice
 			
 			meteo = new Meteo(temperatureMin,temperatureMax,vent,pluie,probabilitePluie,temps);
 			
@@ -66,15 +63,8 @@ public class MeteoApiImpl implements MeteoApi {
 			
 			return(meteo);
 		}
-		catch (MalformedURLException e) {
-			e.printStackTrace();
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
-		} 
-		catch (ParseException e) {			
-			e.printStackTrace();
-		}
-		return meteo;		
+		catch (IOException|ParseException e) {
+			throw new Error(e);
+		} 			
 	}
 }

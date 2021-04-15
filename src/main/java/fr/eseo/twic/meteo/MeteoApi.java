@@ -4,6 +4,6 @@ import fr.eseo.twic.modele.Meteo;
 
 public interface MeteoApi {
 	
-	public Meteo getMeteo(String codeInsee);
+	public Meteo getMeteo(String codeInsee) throws MeteoApiException;
 
 }
