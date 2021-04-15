@@ -11,31 +11,22 @@ import fr.eseo.twic.api.VilleApi;
 import fr.eseo.twic.api.VilleApiImpl;
 import fr.eseo.twic.modele.Ville;
 
-/**
- * Servlet implementation class ModifierVille
- */
 @WebServlet("/ModifierVille")
 public class ModifierVille extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+   
     public ModifierVille() {
-        super();
-        // TODO Auto-generated constructor stub
+        super();        
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	/*
+	 * Not use in this project.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		VilleApi villeApi = new VilleApiImpl();
 		Ville ville = new Ville();

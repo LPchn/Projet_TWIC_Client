@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eseo.twic.api.VilleApi;
+import fr.eseo.twic.api.VilleApiException;
 import fr.eseo.twic.api.VilleApiImpl;
 import fr.eseo.twic.meteo.MeteoApi;
 import fr.eseo.twic.meteo.MeteoApiException;
@@ -35,8 +36,14 @@ public class DetailsVille extends HttpServlet {
 		String code = request.getParameter("code");
 		
 		VilleApi villeApi = new VilleApiImpl();
-		Ville ville = villeApi.getVille(code);
-		request.setAttribute("ville", ville);
+		Ville ville;
+		try {
+			ville = villeApi.getVille(code);
+			request.setAttribute("ville", ville);
+		} catch (VilleApiException e1) {			
+			e1.printStackTrace();
+		}
+		
 		
 		MeteoApi meteoApi = new MeteoApiImpl();
 		Meteo meteo;

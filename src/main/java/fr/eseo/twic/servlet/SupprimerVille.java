@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eseo.twic.api.VilleApi;
+import fr.eseo.twic.api.VilleApiException;
 import fr.eseo.twic.api.VilleApiImpl;
 
 /**
@@ -30,7 +31,11 @@ public class SupprimerVille extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		VilleApi villeApi = new VilleApiImpl();
-		villeApi.supprimerVille(request.getParameter("code"));
+		try {
+			villeApi.supprimerVille(request.getParameter("code"));
+		} catch (VilleApiException e) {			
+			e.printStackTrace();
+		}
 		response.sendRedirect("/Client/listeVilles");
 	}
 

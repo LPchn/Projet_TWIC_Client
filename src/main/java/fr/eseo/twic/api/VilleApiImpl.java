@@ -4,14 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
-
 import fr.eseo.twic.modele.Ville;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,16 +23,21 @@ import org.json.simple.parser.ParseException;
  */
 public class VilleApiImpl implements VilleApi {
 	
+	private static final String LIEN = "http://localhost:8383/ville";
+	private static final String ERREUR = "Erreur avec le serveur";
+	
+	
 	/**
 	 * Permet de retourner une liste de l'ensemble des villes inscrite dans l'API.
+	 * @throws VilleApiException 
 	 */
-	public ArrayList<Ville> listeVille() {
+	public ArrayList<Ville> listeVille() throws VilleApiException {
 		
-		ArrayList<Ville> villes = new ArrayList<Ville>();
+		ArrayList<Ville> villes = new ArrayList<>();
 
 		try {
 
-			URL url = new URL("http://localhost:8383/ville");
+			URL url = new URL(LIEN);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			// conn.setRequestProperty("Accept", "application/json"); //?
@@ -43,7 +45,7 @@ public class VilleApiImpl implements VilleApi {
 			// Lorsqu'on envoie une requête, on reçoit un code de réponse 200.
 			// On s'assure donc que la requête fonctionne.
 			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+				throw new VilleApiException(ERREUR);
 			}
 
 			// On lit ce que la connexion nous renvoie.
@@ -80,28 +82,23 @@ public class VilleApiImpl implements VilleApi {
 			}			
 			conn.disconnect();
 		} 
-		catch (MalformedURLException e) {
+		catch (IOException|ParseException e) {
 			e.printStackTrace();
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
-		} 
-		catch (ParseException e) {			
-			e.printStackTrace();
-		}		
+		}	
 		return(villes);
 	}
 	
 	/**
 	 * Permet de retourner la ville ayant le code commune "codeCommune".
+	 * @throws VilleApiException 
 	 */
-	public Ville getVille(String codeCommune) {
+	public Ville getVille(String codeCommune) throws VilleApiException {
 		
 		Ville ville = new Ville();
 
 		try {
 
-			URL url = new URL("http://localhost:8383/ville");
+			URL url = new URL(LIEN);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			// conn.setRequestProperty("Accept", "application/json"); //?
@@ -109,7 +106,7 @@ public class VilleApiImpl implements VilleApi {
 			// Lorsqu'on envoie une requête, on reçoit un code de réponse 200.
 			// On s'assure donc que la requête fonctionne.
 			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+				throw new VilleApiException(ERREUR);
 			}
 
 			// On lit ce que la connexion nous renvoie.
@@ -147,25 +144,20 @@ public class VilleApiImpl implements VilleApi {
 			}			
 			conn.disconnect();
 		} 
-		catch (MalformedURLException e) {
+		catch (IOException|ParseException e) {
 			e.printStackTrace();
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
-		} 
-		catch (ParseException e) {			
-			e.printStackTrace();
-		}		
+		}			
 		return(ville);
 	}
 	
 	/**
 	 * Permet de supprimer la ville ayant le code commune "codeCommune".
+	 * @throws VilleApiException 
 	 */
-	public void supprimerVille(String codeCommune) {
+	public void supprimerVille(String codeCommune) throws VilleApiException {
 		try {
 
-			URL url = new URL("http://localhost:8383/ville/" + codeCommune);
+			URL url = new URL(LIEN + codeCommune);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("DELETE");
 			// conn.setRequestProperty("Accept", "application/json"); //?
@@ -173,12 +165,9 @@ public class VilleApiImpl implements VilleApi {
 			// Lorsqu'on envoie une requête, on reçoit un code de réponse 200.
 			// On s'assure donc que la requête fonctionne.
 			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+				throw new VilleApiException(ERREUR);
 			}
 
-		} 
-		catch (MalformedURLException e) {
-			e.printStackTrace();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -188,7 +177,7 @@ public class VilleApiImpl implements VilleApi {
 	/**
 	 * Ajoute une ville dans la BDD du serveur.
 	 */
-	public void ajouterVille(HttpServletRequest request) throws Exception {
+	public void ajouterVille(HttpServletRequest request) throws VilleApiException {
 		
 		try {
 			String code = request.getParameter("code");
@@ -201,7 +190,7 @@ public class VilleApiImpl implements VilleApi {
 			
 			String codeJSON = "{ \"code\":\""+code+"\",\"nom\":\""+nom+"\",\"codePostal\":\""+codePostal+"\",\"libelle\":\""+libelle+"\",\"ligne\":\""+ligne+"\",\"latitude\":\""+latitude+"\",\"longitude\":\""+longitude+"\"}";
 			
-			URL url = new URL("http://localhost:8383/ville");		
+			URL url = new URL(LIEN);		
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			
@@ -230,7 +219,7 @@ public class VilleApiImpl implements VilleApi {
 	 /* Permet de modifier la ville ayant le code commune "codeCommune".
 	 */
 	
-	public void modifierVille(String codeCommune, Ville ville) throws Exception {
+	public void modifierVille(String codeCommune, Ville ville) throws VilleApiException {
 		String nom = ville.getNom();
 		String codePostal = ville.getCodePostal();
 		String libelle = ville.getLibelle();
@@ -282,21 +271,25 @@ public class VilleApiImpl implements VilleApi {
 			}
 		}
 		codeJSON = codeJSON + "}";
-				
-		URL url = new URL("http://localhost:8383/ville/" + codeCommune);
-		HttpURLConnection connexion = (HttpURLConnection) url.openConnection();
-		connexion.setRequestMethod("PUT");
-
-
-		connexion.setRequestProperty("Content-Type", "application/json"); //?
-
-		connexion.setDoOutput(true);
-		OutputStream stream = connexion.getOutputStream();
-		stream.write(codeJSON.getBytes());
-		stream.flush();
-		stream.close();
-
-		connexion.connect();
-
+		
+		try {
+			URL url = new URL("http://localhost:8383/ville/" + codeCommune);
+			HttpURLConnection connexion = (HttpURLConnection) url.openConnection();
+			connexion.setRequestMethod("PUT");
+	
+	
+			connexion.setRequestProperty("Content-Type", "application/json"); //?
+	
+			connexion.setDoOutput(true);
+			OutputStream stream = connexion.getOutputStream();
+			stream.write(codeJSON.getBytes());
+			stream.flush();
+			stream.close();
+	
+			connexion.connect();
 		}
+		catch (Exception e) {
+			throw new VilleApiException("Erreur du serveur.");
+		}
+	}
 }

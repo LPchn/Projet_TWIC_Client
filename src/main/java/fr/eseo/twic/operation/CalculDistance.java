@@ -1,9 +1,10 @@
 package fr.eseo.twic.operation;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import fr.eseo.twic.api.VilleApi;
+import fr.eseo.twic.api.VilleApiException;
 import fr.eseo.twic.api.VilleApiImpl;
 import fr.eseo.twic.modele.Ville;
 
@@ -29,7 +30,10 @@ public class CalculDistance {
 		Ville ville2 = null;
 		
 		VilleApi villeApi = new VilleApiImpl();
-		ArrayList<Ville> villes = villeApi.listeVille();
+		List<Ville> villes;
+		try {
+			villes = villeApi.listeVille();
+		
 		
 		for(Ville ville : villes) {
 			if (ville.getNom().equals(nomVille1)) {
@@ -61,6 +65,12 @@ public class CalculDistance {
 		
 		}
 		
+		
+		
+		} 
+		catch (VilleApiException e) {			
+			e.printStackTrace();
+		}
 		return(distance);
 	}
 }

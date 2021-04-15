@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eseo.twic.api.VilleApi;
+import fr.eseo.twic.api.VilleApiException;
 import fr.eseo.twic.api.VilleApiImpl;
 import fr.eseo.twic.operation.CalculDistance;
 import fr.eseo.twic.operation.CalculDistanceException;
@@ -21,7 +22,11 @@ public class PagePrincipale extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		VilleApi villes = new VilleApiImpl();
-		request.setAttribute("villes", villes.listeVille());
+		try {
+			request.setAttribute("villes", villes.listeVille());
+		} catch (VilleApiException e) {
+			e.printStackTrace();
+		}
 			
 		this.getServletContext().getRequestDispatcher("/WEB-INF/pagePrincipale.jsp").forward(request, response);
 	}
@@ -39,7 +44,11 @@ public class PagePrincipale extends HttpServlet {
 			
 			//Il faut redonner la liste des villes dans le cas où l'utilisateur choisit deux mêmes villes
 			VilleApi villes = new VilleApiImpl();
-			request.setAttribute("villes", villes.listeVille());
+			try {
+				request.setAttribute("villes", villes.listeVille());
+			} catch (VilleApiException e) {				
+				e.printStackTrace();
+			}
 			
 			request.setAttribute("distance", calculDistance.calculDistance(request));
 		}
