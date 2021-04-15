@@ -23,7 +23,6 @@ public class SupprimerVille extends HttpServlet {
      */
     public SupprimerVille() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
