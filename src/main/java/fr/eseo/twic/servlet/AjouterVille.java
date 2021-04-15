@@ -1,8 +1,6 @@
 package fr.eseo.twic.servlet;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,9 +18,7 @@ public class AjouterVille extends HttpServlet {
         super();        
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		VilleApi villeApi = new VilleApiImpl();				
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/ajout.jsp").forward(request, response);
 	}
 

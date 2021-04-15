@@ -1,10 +1,7 @@
 package fr.eseo.twic.api;
 
-import java.net.MalformedURLException;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import fr.eseo.twic.modele.Ville;
 
 public interface VilleApi {

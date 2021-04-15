@@ -61,7 +61,7 @@ public class CalculDistance {
 							
 			distance = 1.852*60*z;		
 			
-			distance = Math.round((double)distance*100)/(double)100;
+			distance = Math.round(distance*100)/100;
 		
 		}
 		
