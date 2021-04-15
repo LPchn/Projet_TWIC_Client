@@ -40,22 +40,26 @@ public class CalculDistance {
 			}
 		}
 		
-		double longitude1 = Double.parseDouble(ville1.getLongitude());
-		double latitude1 = Double.parseDouble(ville1.getLatitude());
-		double longitude2 = Double.parseDouble(ville2.getLongitude());
-		double latitude2 = Double.parseDouble(ville2.getLatitude());
+		if(ville1 != null && ville2!=null) {
 		
-		double latitude1Radian = Math.toRadians(latitude1);
-		double latitude2Radian = Math.toRadians(latitude2);
+			double longitude1 = Double.parseDouble(ville1.getLongitude());
+			double latitude1 = Double.parseDouble(ville1.getLatitude());
+			double longitude2 = Double.parseDouble(ville2.getLongitude());
+			double latitude2 = Double.parseDouble(ville2.getLatitude());
+			
+			double latitude1Radian = Math.toRadians(latitude1);
+			double latitude2Radian = Math.toRadians(latitude2);
+			
 		
-	
-		double x = (longitude2-longitude1)*(Math.cos((latitude1Radian+latitude2Radian)/2));		
-		double y = latitude2-latitude1;
-		double z = Math.sqrt(Math.pow(x, 2)+Math.pow(y,2));
-						
-		distance = 1.852*60*z;		
+			double x = (longitude2-longitude1)*(Math.cos((latitude1Radian+latitude2Radian)/2));		
+			double y = latitude2-latitude1;
+			double z = Math.sqrt(Math.pow(x, 2)+Math.pow(y,2));
+							
+			distance = 1.852*60*z;		
+			
+			distance = Math.round((double)distance*100)/(double)100;
 		
-		distance = Math.round(distance*100)/100;
+		}
 		
 		return(distance);
 	}
