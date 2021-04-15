@@ -157,7 +157,7 @@ public class VilleApiImpl implements VilleApi {
 	public void supprimerVille(String codeCommune) throws VilleApiException {
 		try {
 
-			URL url = new URL(LIEN + codeCommune);
+			URL url = new URL(LIEN + "/" + codeCommune);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("DELETE");
 			// conn.setRequestProperty("Accept", "application/json"); //?
@@ -220,6 +220,7 @@ public class VilleApiImpl implements VilleApi {
 	 */
 	
 	public void modifierVille(String codeCommune, Ville ville) throws VilleApiException {
+		
 		String nom = ville.getNom();
 		String codePostal = ville.getCodePostal();
 		String libelle = ville.getLibelle();
@@ -229,6 +230,7 @@ public class VilleApiImpl implements VilleApi {
 
 		String codeJSON = "{";
 		if (!nom.equals("")) {
+			
 			if (codeJSON.equals("{")) {
 				codeJSON = codeJSON + "\"nom\":\"" + nom + "\"";
 			}else {
@@ -272,6 +274,8 @@ public class VilleApiImpl implements VilleApi {
 		}
 		codeJSON = codeJSON + "}";
 		
+		System.out.println(codeJSON);
+		
 		try {
 			URL url = new URL("http://localhost:8383/ville/" + codeCommune);
 			HttpURLConnection connexion = (HttpURLConnection) url.openConnection();
@@ -281,15 +285,19 @@ public class VilleApiImpl implements VilleApi {
 			connexion.setRequestProperty("Content-Type", "application/json"); //?
 	
 			connexion.setDoOutput(true);
-			OutputStream stream = connexion.getOutputStream();
+			OutputStream stream = connexion.getOutputStream();			
+			
 			stream.write(codeJSON.getBytes());
 			stream.flush();
 			stream.close();
 	
 			connexion.connect();
+			
+			System.out.println(connexion.getResponseCode());
 		}
-		catch (Exception e) {
-			throw new VilleApiException("Erreur du serveur.");
+		catch(IOException e) {
+			
 		}
+		
 	}
 }

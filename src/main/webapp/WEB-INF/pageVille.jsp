@@ -39,7 +39,7 @@
 	    <tbody>
 		    <c:forEach var="ville" items="${listeVilles}" varStatus="status"
 		                        begin="${pageStart}" end="${pageStart + parPage - 1}">
-		    	<c:url value="/details" var="url">
+		    	<c:url value="http://localhost:8585/Client/details" var="url">
 					<c:param name="code" value="${ ville.code }"/>
 		        </c:url>
 	          	<tr onclick="window.location.href='${url}'">

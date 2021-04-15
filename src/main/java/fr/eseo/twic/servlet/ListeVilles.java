@@ -33,8 +33,7 @@ public class ListeVilles extends HttpServlet {
 			request.setAttribute("listeVilles", listeVilles);	
 		} catch (VilleApiException e) {			
 			e.printStackTrace();
-		}
-			
+		}			
 		
 		request.getServletContext().getRequestDispatcher("/WEB-INF/pageVille.jsp").forward(request, response);
 	}

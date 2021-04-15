@@ -39,6 +39,7 @@ public class ModifierVille extends HttpServlet {
 		
 		try {
 			villeApi.modifierVille(request.getParameter("code"), ville);
+			System.out.println(request.getParameter("code"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

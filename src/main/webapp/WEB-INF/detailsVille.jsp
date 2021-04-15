@@ -62,7 +62,7 @@
 		        </div>
 		      </div>
 		    </div>
-			<a href="http://localhost:8080/Client/supprimer?code=${ville.code}" class="btn btn-primary">Supprimer</a>
+			<a href="http://localhost:8585/Client/supprimer?code=${ville.code}" class="btn btn-primary">Supprimer</a>
 		</div>
   		</div>
 	</div>

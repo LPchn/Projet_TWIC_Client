@@ -36,7 +36,7 @@ public class SupprimerVille extends HttpServlet {
 		} catch (VilleApiException e) {			
 			e.printStackTrace();
 		}
-		response.sendRedirect("/Client/listeVilles");
+		response.sendRedirect("http://localhost:8585/Client/accueil");
 	}
 
 	/**
