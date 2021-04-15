@@ -38,8 +38,7 @@ public class ModifierVille extends HttpServlet {
 		ville.setLigne(request.getParameter("ligne"));
 		
 		try {
-			villeApi.modifierVille(request.getParameter("code"), ville);
-			System.out.println(request.getParameter("code"));
+			villeApi.modifierVille(request.getParameter("code"), ville);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

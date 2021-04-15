@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -271,9 +272,7 @@ public class VilleApiImpl implements VilleApi {
 				codeJSON = codeJSON + ",\"longitude\":\"" + longitude + "\"";
 			}
 		}
-		codeJSON = codeJSON + "}";
-		
-		System.out.println(codeJSON);
+		codeJSON = codeJSON + "}";		
 		
 		try {
 			URL url = new URL("http://localhost:8383/ville/" + codeCommune);
@@ -292,7 +291,8 @@ public class VilleApiImpl implements VilleApi {
 	
 			connexion.connect();
 			
-			System.out.println(connexion.getResponseCode());
+			connexion.getResponseCode();
+			
 		}
 		catch(IOException e) {
 			
